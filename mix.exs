@@ -51,7 +51,10 @@ defmodule JustTravel.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:money, "~> 1.12"}
+      {:money, "~> 1.12"},
+
+      # Code analisys
+       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
