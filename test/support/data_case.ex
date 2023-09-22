@@ -24,6 +24,7 @@ defmodule JustTravel.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import JustTravel.DataCase
+      import JustTravel.Factory
     end
   end
 

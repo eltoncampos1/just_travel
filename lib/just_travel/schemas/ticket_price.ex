@@ -10,7 +10,7 @@ defmodule JustTravel.Schemas.TicketPrice do
   @optional []
   @ticket_values [:children, :adult]
 
-  schema "ticket_price" do
+  schema "ticket_prices" do
     field :category, Ecto.Enum, values: @ticket_values
     field :price, Money.Ecto.Type
 

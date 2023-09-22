@@ -54,7 +54,10 @@ defmodule JustTravel.MixProject do
       {:money, "~> 1.12"},
 
       # Code analisys
-       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+
+      # Test tools
+       {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 

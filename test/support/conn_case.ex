@@ -28,6 +28,7 @@ defmodule JustTravelWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import JustTravelWeb.ConnCase
+      import JustTravel.Factory
     end
   end
 
