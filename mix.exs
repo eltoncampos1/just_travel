@@ -57,7 +57,7 @@ defmodule JustTravel.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
 
       # Test tools
-       {:ex_machina, "~> 2.7.0", only: :test}
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 
