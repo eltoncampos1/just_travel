@@ -12,6 +12,17 @@ defmodule JustTravelWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json, Absinthe.Plug.Parser],
+      pass: ["*/*"],
+      json_decoder: Jason
+  end
+
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphql", Absinthe.Plug, schema: JustTravelWeb.Schema
+      forward "/graphiql", Absinthe.Plug.GraphiQL, schema: JustTravelWeb.Schema
   end
 
   scope "/", JustTravelWeb do
