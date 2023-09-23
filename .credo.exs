@@ -13,7 +13,7 @@
       color: true,
       checks: %{
         enabled: [
-          {Credo.Check.Design.DuplicatedCode, priority: :low,}
+          {Credo.Check.Design.DuplicatedCode, priority: :low}
         ]
       }
     }
