@@ -52,6 +52,8 @@ defmodule JustTravel.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:money, "~> 1.12"},
+      {:absinthe, "~> 1.7", override: true},
+      {:absinthe_plug, "~> 1.5"},
 
       # Code analisys
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
