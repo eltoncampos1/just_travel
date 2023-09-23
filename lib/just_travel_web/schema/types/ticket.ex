@@ -14,5 +14,6 @@ defmodule JustTravelWeb.Schema.Types.Ticket do
 
   input_object :ticket_filters_input do
     field :location_name, :string
+    field :id, :id
   end
 end
