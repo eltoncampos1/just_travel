@@ -73,19 +73,10 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
           }
         })
 
-      assert %{
-               "data" => %{"tickets" => nil},
-               "errors" => [
-                 %{
-                   "locations" => _,
-                   "message" => "not_found",
-                   "path" => ["tickets"]
-                 }
-               ]
-             } = json_response(conn, 200)
+      assert %{"data" => %{"tickets" => []}} = json_response(conn, 200)
     end
 
-    test "return error if has invalid location name filter - [empty string]", %{conn: conn} do
+    test "return all tickets location name filter - [empty string]", %{conn: conn} do
       conn =
         post(conn, "/api/graphql", %{
           "query" => @ticket_query,
@@ -97,38 +88,56 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
         })
 
       assert %{
-               "data" => %{"tickets" => nil},
-               "errors" => [
-                 %{
-                   "locations" => _,
-                   "message" => "not_found",
-                   "path" => ["tickets"]
-                 }
-               ]
+               "data" => %{
+                 "tickets" => tickets
+               }
              } = json_response(conn, 200)
+
+      assert length(tickets) == 4
     end
 
-    test "return error if has invalid location name filter - [nil]", %{conn: conn} do
+    test "returns ticket by id", %{conn: conn} do
+      ticket = insert(:ticket, name: "Travel to Rome")
+
       conn =
         post(conn, "/api/graphql", %{
           "query" => @ticket_query,
           "variables" => %{
             filters: %{
-              location_name: nil
+              id: ticket.id
             }
           }
         })
 
       assert %{
-               "data" => %{"tickets" => nil},
-               "errors" => [
-                 %{
-                   "locations" => _,
-                   "message" => "not_found",
-                   "path" => ["tickets"]
-                 }
-               ]
+               "data" => %{
+                 "tickets" => [
+                   %{
+                     "date" => date,
+                     "id" => id,
+                     "locationId" => location_id,
+                     "name" => name
+                   }
+                 ]
+               }
              } = json_response(conn, 200)
+
+      assert %{id: ^id, name: ^name, location_id: ^location_id} = ticket
+      assert Date.to_iso8601(ticket.date) == date
+    end
+
+    test "return [] if no ticket is founded by id", %{conn: conn} do
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @ticket_query,
+          "variables" => %{
+            filters: %{
+              id: Ecto.UUID.generate()
+            }
+          }
+        })
+
+      assert %{"data" => %{"tickets" => []}} = json_response(conn, 200)
     end
   end
 end
