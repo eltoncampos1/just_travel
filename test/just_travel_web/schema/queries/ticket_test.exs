@@ -62,13 +62,59 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
       assert Enum.all?([location_id_1, location_id_2], &(&1 == location.id))
     end
 
-    test "return error if has invalid location name filter", %{conn: conn} do
+    test "return error if has invalid location name filter - [invalid location]", %{conn: conn} do
       conn =
         post(conn, "/api/graphql", %{
           "query" => @ticket_query,
           "variables" => %{
             filters: %{
               location_name: "invalid"
+            }
+          }
+        })
+
+      assert %{
+               "data" => %{"tickets" => nil},
+               "errors" => [
+                 %{
+                   "locations" => _,
+                   "message" => "not_found",
+                   "path" => ["tickets"]
+                 }
+               ]
+             } = json_response(conn, 200)
+    end
+
+    test "return error if has invalid location name filter - [empty string]", %{conn: conn} do
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @ticket_query,
+          "variables" => %{
+            filters: %{
+              location_name: ""
+            }
+          }
+        })
+
+      assert %{
+               "data" => %{"tickets" => nil},
+               "errors" => [
+                 %{
+                   "locations" => _,
+                   "message" => "not_found",
+                   "path" => ["tickets"]
+                 }
+               ]
+             } = json_response(conn, 200)
+    end
+
+    test "return error if has invalid location name filter - [nil]", %{conn: conn} do
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @ticket_query,
+          "variables" => %{
+            filters: %{
+              location_name: nil
             }
           }
         })
