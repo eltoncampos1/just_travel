@@ -23,6 +23,5 @@ defmodule JustTravelWeb.Schema.Types.Cart do
     field :currency, :string
   end
 
-
   payload_object(:cart_payload, :cart)
 end

@@ -10,10 +10,12 @@ defmodule JustTravelWeb.Schema.Types.Root do
   import_types Types.Cart
 
   import_types Queries.Ticket
+  import_types Queries.Cart
   import_types Mutations.Cart
 
   object :root_queries do
     import_fields :tickets_queries
+    import_fields :cart_queries
   end
 
   object :root_mutations do
