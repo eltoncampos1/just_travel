@@ -10,7 +10,7 @@ defmodule JustTravel.Ticket.Cart.Command.CreateCartTest do
     %{params: params}
   end
 
-  describe "changeste/2" do
+  describe "changeset/2" do
     test "returns a valid changeset", %{params: params} do
       assert %Ecto.Changeset{valid?: true} = Cart.Command.CreateCart.changeset(params)
     end
