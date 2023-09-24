@@ -32,7 +32,7 @@ defmodule JustTravel.Schemas.Cart.Repository do
   end
 
   defp add(%Cart{} = cart, item) do
-    new_price = Money.add(cart.total_price, item.price)
+    new_price = calculate_total_price(cart.total_price, item)
 
     new_items = add_or_update_qty(cart.items, item)
 
@@ -42,6 +42,12 @@ defmodule JustTravel.Schemas.Cart.Repository do
         total_qty: cart.total_qty + 1,
         total_price: new_price
     }
+  end
+
+  defp calculate_total_price(total_price, item) do
+    discount = Map.get(item, :discount, Money.new(0))
+    new_price = Money.subtract(item.price, discount)
+    Money.add(total_price, new_price)
   end
 
   defp add_or_update_qty(items, item) do
