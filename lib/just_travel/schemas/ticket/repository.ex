@@ -18,10 +18,11 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     |> Repo.all()
   end
 
-  def by_ticket_id(ticket_id) do
+  def by_ticket_id(ticket_id, preloads \\ []) do
     from(tkt in Schemas.Ticket, as: :ticket)
     |> Schemas.Ticket.Query.by_ticket_id(ticket_id)
     |> Repo.one()
+    |> Repo.preload(preloads)
     |> case do
       nil -> {:error, :not_found}
       %Schemas.Ticket{} = ticket -> {:ok, ticket}
