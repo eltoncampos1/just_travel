@@ -20,25 +20,25 @@ defmodule JustTravel.Server.Cart do
 
   def create(cart_id), do: GenServer.cast(@name, {:create, cart_id})
   def add(cart_id, item), do: GenServer.cast(@name, {:add, cart_id, item})
-  def get(cart_id), do: GenServer.cast(@name, {:get, cart_id})
+  def get(cart_id), do: GenServer.call(@name, {:get, cart_id})
 
   def handle_cast({:create, cart_id}, name) do
     case CartRepository.find_cart(cart_id) do
-      {:error, []} -> CartRepository.new(cart_id)
+      {:error, :not_found} -> CartRepository.new(cart_id)
       {:ok, _} -> :ok
     end
 
     {:noreply, name}
   end
 
-  def handle_cast({:add, cart_id, _product}, name) do
+  def handle_cast({:add, cart_id, item}, name) do
     case CartRepository.find_cart(cart_id) do
-      {:error, []} ->
-        :ets.insert(name, {cart_id, "create"})
+      {:error, :not_found} ->
+        cart = CartRepository.new(cart_id)
+        CartRepository.add_item(cart, item)
 
       {:ok, _} ->
-        cart = "add(cart, product)"
-        :ets.insert(name, {cart_id, cart})
+        CartRepository.add_item(cart_id, item)
     end
 
     {:noreply, name}
@@ -46,7 +46,7 @@ defmodule JustTravel.Server.Cart do
 
   def handle_call({:get, cart_id}, _from, name) do
     case CartRepository.find_cart(cart_id) do
-      {:error, []} -> {:reply, :not_found, name}
+      {:error, :not_found} -> {:reply, :not_found, name}
       {:ok, cart} -> {:reply, cart, name}
     end
   end
