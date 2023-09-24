@@ -1,4 +1,4 @@
-defmodule JustTravel.Ticket.Cart.Command.CreateCartTest do
+defmodule JustTravel.Ticket.Cart.Commands.GetCartByIdTest do
   use JustTravel.DataCase, async: true
   alias JustTravel.Cart
 
@@ -12,21 +12,21 @@ defmodule JustTravel.Ticket.Cart.Command.CreateCartTest do
 
   describe "changeset/2" do
     test "returns a valid changeset", %{params: params} do
-      assert %Ecto.Changeset{valid?: true} = Cart.Command.CreateCart.changeset(params)
+      assert %Ecto.Changeset{valid?: true} = Cart.Commands.GetCartById.changeset(params)
     end
 
     test "returns error on invalid input" do
       assert %Ecto.Changeset{
                valid?: false,
                errors: [cart_id: {"is invalid", [type: :binary_id, validation: :cast]}]
-             } = Cart.Command.CreateCart.changeset(%{cart_id: 123})
+             } = Cart.Commands.GetCartById.changeset(%{cart_id: 123})
     end
 
     test "returns error on missing required params" do
       assert %Ecto.Changeset{
                valid?: false,
                errors: [cart_id: {"can't be blank", [validation: :required]}]
-             } = Cart.Command.CreateCart.changeset(%{id: 123})
+             } = Cart.Commands.GetCartById.changeset(%{id: 123})
     end
   end
 end

@@ -18,10 +18,5 @@ defmodule JustTravelWeb.Schema.Types.Cart do
     field :cart_id, non_null(:id)
   end
 
-  object :price do
-    field :amount, :integer
-    field :currency, :string
-  end
-
   payload_object(:cart_payload, :cart)
 end

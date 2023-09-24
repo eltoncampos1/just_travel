@@ -16,7 +16,7 @@ defmodule JustTravel.Schemas.Ticket do
     field :date, :date
     belongs_to :location, Schemas.Location
 
-    has_many :prices, Schemas.TicketPrice
+    has_one :price, Schemas.TicketPrice
     has_one :discount, Schemas.TicketDiscount
     timestamps()
   end

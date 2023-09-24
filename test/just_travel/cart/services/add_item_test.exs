@@ -4,7 +4,7 @@ defmodule JustTravel.Ticket.Cart.Services.AddItemTest do
   alias JustTravel.Schemas
 
   setup do
-    params = %Cart.Command.AddItem{
+    params = %Cart.Commands.AddItem{
       cart_id: Ecto.UUID.generate(),
       item: %{
         price: Money.new(2000),
@@ -19,14 +19,7 @@ defmodule JustTravel.Ticket.Cart.Services.AddItemTest do
     test "should add item to cart", %{params: params} do
       assert {:ok,
               %Schemas.Cart{
-                id:
-                  {:ok,
-                   %Schemas.Cart{
-                     id: cart_id,
-                     items: [],
-                     total_price: %Money{amount: 0, currency: :BRL},
-                     total_qty: 0
-                   }},
+                id: cart_id,
                 items: [
                   %{
                     item: %{

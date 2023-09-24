@@ -21,8 +21,7 @@ defmodule JustTravel.Schemas.TicketDiscount do
     schema
     |> cast(params, @required ++ @optional)
     |> validate_required(@required)
-    |> validate_length(:name, min: 2)
-    |> validate_length(:description, min: 10)
+    |> validate_length(:discount_name, min: 2)
     |> assoc_constraint(:ticket)
   end
 end
