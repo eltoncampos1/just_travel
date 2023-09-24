@@ -5,7 +5,7 @@ defmodule JustTravelWeb.Schema.Queries.Ticket do
 
   alias Crudry.Middlewares.TranslateErrors
 
-  object :tickets do
+  object :tickets_queries do
     @desc "Query for tickets"
     field :tickets, list_of(:ticket) do
       arg :filters, :ticket_filters_input

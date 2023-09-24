@@ -4,6 +4,7 @@ defmodule JustTravel.Application do
   @moduledoc false
 
   use Application
+  alias JustTravel.Server.Cart
 
   @impl true
   def start(_type, _args) do
@@ -17,9 +18,10 @@ defmodule JustTravel.Application do
       # Start Finch
       {Finch, name: JustTravel.Finch},
       # Start the Endpoint (http/https)
-      JustTravelWeb.Endpoint
+      JustTravelWeb.Endpoint,
       # Start a worker by calling: JustTravel.Worker.start_link(arg)
       # {JustTravel.Worker, arg}
+      Cart
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
