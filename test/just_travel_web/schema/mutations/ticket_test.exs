@@ -32,6 +32,11 @@ defmodule JustTravelWeb.Schema.Mutations.TicketTest do
       }
     }
       successful
+      messages {
+      code
+      field
+      message
+    }
     }
   }
   """
@@ -75,6 +80,29 @@ defmodule JustTravelWeb.Schema.Mutations.TicketTest do
                      "totalQty" => 1
                    },
                    "successful" => true
+                 }
+               }
+             } = json_response(conn, 200)
+    end
+
+    test "retur error with invalid params", %{conn: conn} do
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @add_ticket_to_cart_mutation,
+          "variables" => %{
+            "cartId" => 123,
+            "ticketId" => 13313
+          }
+        })
+
+      assert %{
+               "data" => %{
+                 "addTicketToCart" => %{
+                   "messages" => [
+                     %{"code" => "unknown", "field" => nil, "message" => "invalid_id_type"}
+                   ],
+                   "result" => nil,
+                   "successful" => false
                  }
                }
              } = json_response(conn, 200)
