@@ -65,7 +65,7 @@ defmodule JustTravelWeb.Schema.Mutations.TicketTest do
                      "items" => [
                        %{
                          "item" => %{
-                           "category" => "CHILDREN",
+                           "category" => _,
                            "country" => "USA",
                            "date" => _,
                            "description" => "Lorem ipsum silor dolor amet",
@@ -85,7 +85,7 @@ defmodule JustTravelWeb.Schema.Mutations.TicketTest do
              } = json_response(conn, 200)
     end
 
-    test "retur error with invalid params", %{conn: conn} do
+    test "return error with invalid UUID", %{conn: conn} do
       conn =
         post(conn, "/api/graphql", %{
           "query" => @add_ticket_to_cart_mutation,
@@ -100,6 +100,31 @@ defmodule JustTravelWeb.Schema.Mutations.TicketTest do
                  "addTicketToCart" => %{
                    "messages" => [
                      %{"code" => "unknown", "field" => nil, "message" => "invalid_id_type"}
+                   ],
+                   "result" => nil,
+                   "successful" => false
+                 }
+               }
+             } = json_response(conn, 200)
+    end
+
+    test "return if ticket does not exists", %{conn: conn} do
+      cart_id = Ecto.UUID.generate()
+
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @add_ticket_to_cart_mutation,
+          "variables" => %{
+            "cartId" => cart_id,
+            "ticketId" => Ecto.UUID.generate()
+          }
+        })
+
+      assert %{
+               "data" => %{
+                 "addTicketToCart" => %{
+                   "messages" => [
+                     %{"code" => "unknown", "field" => nil, "message" => "not_found"}
                    ],
                    "result" => nil,
                    "successful" => false
