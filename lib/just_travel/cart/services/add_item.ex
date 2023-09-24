@@ -1,5 +1,5 @@
 defmodule JustTravel.Cart.Services.AddItem do
-  alias JustTravel.Cart.Command
+  alias JustTravel.Cart.Commands
   alias JustTravel.Schemas.Cart
   alias JustTravel.Schemas.Cart.Repository, as: CartRepository
 

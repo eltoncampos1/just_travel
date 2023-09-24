@@ -1,5 +1,5 @@
 defmodule JustTravel.Cart.Services.GetCartById do
-  alias JustTravel.Cart.Command
+  alias JustTravel.Cart.Commands
   alias JustTravel.Schemas.Cart
 
   @spec execute(Commands.GetCartById.t()) :: {:ok, Cart.t()} | {:error, :not_found}
