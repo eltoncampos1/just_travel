@@ -6,7 +6,8 @@ defmodule JustTravel.Ticket.Commands.AddToCartTest do
     ticket = insert(:ticket)
     discount = insert(:ticket_discount, ticket: ticket)
     price = insert(:ticket_price, ticket: ticket)
-    params =  %{
+
+    params = %{
       id: ticket.id,
       price: price.price,
       description: ticket.description,
