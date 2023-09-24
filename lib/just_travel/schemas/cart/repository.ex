@@ -8,20 +8,24 @@ defmodule JustTravel.Schemas.Cart.Repository do
   def new(cart_id) do
     cart = %Cart{id: cart_id}
     upsert(cart_id, cart)
-    {:ok, cart}
   end
 
-  defp upsert(cart_id, cart), do: :ets.insert(@name, {cart_id, cart})
+  defp upsert(cart_id, cart) do
+    :ets.insert(@name, {cart_id, cart})
+    {:ok, cart}
+  end
 
   def add_item(cart_id, item) do
     case find_cart(cart_id) do
       {:ok, cart} ->
         cart = add(cart, item)
         upsert(cart_id, cart)
-        {:ok, cart}
 
       {:error, :not_found} ->
-        {:error, :not_found}
+        with {:ok, cart} <- new(cart_id),
+             %Cart{} = cart <- add(cart, item) do
+          upsert(cart_id, cart)
+        end
     end
   end
 
