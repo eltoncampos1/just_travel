@@ -10,11 +10,6 @@ defmodule JustTravel.Schemas.Cart.Repository do
     upsert(cart_id, cart)
   end
 
-  defp upsert(cart_id, cart) do
-    :ets.insert(@name, {cart_id, cart})
-    {:ok, cart}
-  end
-
   def add_item(cart_id, item) do
     case find_cart(cart_id) do
       {:ok, cart} ->
@@ -39,9 +34,11 @@ defmodule JustTravel.Schemas.Cart.Repository do
   defp add(%Cart{} = cart, item) do
     new_price = Money.add(cart.total_price, item.price)
 
+    new_items = add_or_update_qty(cart.items, item)
+
     %Cart{
       cart
-      | items: add_or_update_qty(cart.items, item),
+      | items: new_items,
         total_qty: cart.total_qty + 1,
         total_price: new_price
     }
@@ -49,8 +46,17 @@ defmodule JustTravel.Schemas.Cart.Repository do
 
   defp add_or_update_qty(items, item) do
     case Enum.find_index(items, &(&1.item.id == item.id)) do
-      nil -> [%{item: item, qty: 1}] ++ items
-      index -> List.replace_at(items, index, &%{&1 | qty: &1.qty + 1})
+      nil ->
+        [%{item: item, qty: 1}] ++ items
+
+      index ->
+        previous_item = Enum.find(items, &(&1.item.id == item.id))
+        List.replace_at(items, index, %{item: previous_item.item, qty: previous_item.qty + 1})
     end
+  end
+
+  defp upsert(cart_id, cart) do
+    :ets.insert(@name, {cart_id, cart})
+    {:ok, cart}
   end
 end
