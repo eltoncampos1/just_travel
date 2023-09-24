@@ -30,7 +30,6 @@ defmodule JustTravel.Ticket.Services.AddToCartTest do
                 total_price: %Money{amount: 1500, currency: :BRL},
                 total_qty: 1
               }} = Ticket.Services.AddToCart.execute(cart_id, tkt.id)
-
     end
   end
 end
