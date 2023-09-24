@@ -55,6 +55,7 @@ defmodule JustTravel.MixProject do
       {:absinthe, "~> 1.7", override: true},
       {:absinthe_plug, "~> 1.5"},
       {:crudry, "~> 2.4.0"},
+      {:absinthe_error_payload, "~> 1.0"},
 
       # Code analisys
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
