@@ -10,4 +10,7 @@ defmodule JustTravelWeb.Schema.Resolvers.Ticket do
       {:ok, tickets}
     end
   end
+
+  def add_to_cart(%{cart_id: cart_id, ticket_id: ticket_id}, _ctx),
+    do: Services.AddToCart.execute(cart_id, ticket_id)
 end
