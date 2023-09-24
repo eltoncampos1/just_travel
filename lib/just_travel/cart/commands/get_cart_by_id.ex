@@ -1,4 +1,4 @@
-defmodule JustTravel.Cart.Command.GetCartById do
+defmodule JustTravel.Cart.Commands.GetCartById do
   use JustTravel.EmbeddedSchema
 
   @required [:cart_id]

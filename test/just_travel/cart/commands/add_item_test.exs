@@ -1,4 +1,4 @@
-defmodule JustTravel.Ticket.Cart.Command.AddItemTest do
+defmodule JustTravel.Cart.Commands.AddItemTest do
   use JustTravel.DataCase, async: true
 
   alias JustTravel.Cart
@@ -14,7 +14,7 @@ defmodule JustTravel.Ticket.Cart.Command.AddItemTest do
 
   describe "changeset/2" do
     test "returns a valid changeset", %{params: params} do
-      assert %Ecto.Changeset{valid?: true} = Cart.Command.AddItem.changeset(params)
+      assert %Ecto.Changeset{valid?: true} = Cart.Commands.AddItem.changeset(params)
     end
 
     test "returns error on invalid input" do
@@ -24,7 +24,7 @@ defmodule JustTravel.Ticket.Cart.Command.AddItemTest do
                  cart_id: {"is invalid", [type: :binary_id, validation: :cast]},
                  item: {"is invalid", [type: :map, validation: :cast]}
                ]
-             } = Cart.Command.AddItem.changeset(%{cart_id: 123, item: "invalid"})
+             } = Cart.Commands.AddItem.changeset(%{cart_id: 123, item: "invalid"})
     end
 
     for field <- [:cart_id, :item] do
@@ -34,7 +34,7 @@ defmodule JustTravel.Ticket.Cart.Command.AddItemTest do
                } =
                  params
                  |> Map.drop([unquote(field)])
-                 |> Cart.Command.AddItem.changeset()
+                 |> Cart.Commands.AddItem.changeset()
       end
     end
   end

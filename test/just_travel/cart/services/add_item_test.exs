@@ -4,7 +4,7 @@ defmodule JustTravel.Ticket.Cart.Services.AddItemTest do
   alias JustTravel.Schemas
 
   setup do
-    params = %Cart.Command.AddItem{
+    params = %Cart.Commands.AddItem{
       cart_id: Ecto.UUID.generate(),
       item: %{
         price: Money.new(2000),

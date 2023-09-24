@@ -1,10 +1,11 @@
-defmodule JustTravel.Cart.Command.CreateCart do
+defmodule JustTravel.Cart.Commands.AddItem do
   use JustTravel.EmbeddedSchema
 
-  @required [:cart_id]
+  @required [:cart_id, :item]
 
   embedded_schema do
     field :cart_id, :binary_id
+    field :item, :map
   end
 
   def changeset(schema \\ %__MODULE__{}, params) do

@@ -7,7 +7,7 @@ defmodule JustTravel.Ticket.Cart.Services.GetCartByIdTest do
     cart_id = Ecto.UUID.generate()
     Schemas.Cart.Repository.new(cart_id)
 
-    params = %Cart.Command.GetCartById{
+    params = %Cart.Commands.GetCartById{
       cart_id: cart_id
     }
 
@@ -28,7 +28,7 @@ defmodule JustTravel.Ticket.Cart.Services.GetCartByIdTest do
     end
 
     test "should return not_found" do
-      params = %Cart.Command.GetCartById{
+      params = %Cart.Commands.GetCartById{
         cart_id: Ecto.UUID.generate()
       }
 
