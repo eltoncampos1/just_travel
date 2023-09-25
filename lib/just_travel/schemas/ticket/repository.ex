@@ -37,6 +37,7 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     from(tkt in Schemas.Ticket, as: :ticket)
     |> join_location()
     |> apply_filters(filters)
+    |> maybe_paginate?(filters)
     |> Repo.all()
   end
 
@@ -56,4 +57,10 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     do: Schemas.Location.Query.by_location_name(queryable, location_name)
 
   defp filter({:id, id}, queryable), do: Schemas.Ticket.Query.by_ticket_id(queryable, id)
+  defp filter(_invalid_filter, queryable), do: queryable
+
+  defp maybe_paginate?(queryable, %{paginate: paginate}),
+    do: JustTravel.Utils.Repo.paginate(queryable, paginate)
+
+  defp maybe_paginate?(queryable, _), do: queryable
 end

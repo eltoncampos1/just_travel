@@ -16,6 +16,12 @@ defmodule JustTravelWeb.Schema.Types.Ticket do
   input_object :ticket_filters_input do
     field :location_name, :string
     field :id, :id
+    field :paginate, :paginate
+  end
+
+  input_object :paginate do
+    field :page, :integer
+    field :per_page, :integer
   end
 
   enum :category, values: [:adult, :children]
