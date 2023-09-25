@@ -56,11 +56,6 @@ defmodule JustTravel.Schemas.Cart.Repository do
     end
   end
 
-  defp change_price_on_remove_item(price, discount, total_price) do
-    new_price = Money.subtract(price, discount)
-    Money.subtract(total_price, new_price)
-  end
-
   def do_delete(cart, item_id) do
     previous_item = find_item(cart.items, item_id)
     price = Money.multiply(previous_item.item.price, previous_item.qty)
@@ -74,6 +69,11 @@ defmodule JustTravel.Schemas.Cart.Repository do
         total_qty: cart.total_qty - previous_item.qty,
         total_price: new_price
     }
+  end
+
+  defp change_price_on_remove_item(price, discount, total_price) do
+    new_price = Money.subtract(price, discount)
+    Money.subtract(total_price, new_price)
   end
 
   defp do_decrease(cart, item_id) do
