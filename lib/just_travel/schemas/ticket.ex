@@ -7,7 +7,7 @@ defmodule JustTravel.Schemas.Ticket do
 
   alias JustTravel.Schemas
 
-  @required [:name, :date, :description]
+  @required [:name, :date, :description, :location_id]
   @optional []
 
   schema "tickets" do
