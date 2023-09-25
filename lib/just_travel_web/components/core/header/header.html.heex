@@ -1,0 +1,28 @@
+<header class="py-[1.5rem] px-2 md:px-[3.75rem] w-full flex justify-between items-center" data-role="HEADER">
+  <div>
+    <img src={~p"/images/logo.png"} alt="Logo" />
+  </div>
+  <div class="flex items-center">
+    <div class="hidden md:flex items-center gap-4">
+      <p class="text-xs text-[#3C4C70]">Cotação dólar hoje: R$5,53</p>
+      <img src={~p"/images/brazil.png"} alt="Brazil " />
+      <img src={~p"/images/icons/question.svg"} alt="Question " />
+    </div>
+    <div class="border-r-2 border-gray h-[29px] mx-4" />
+    <div class="flex items-center gap-4">
+      <button class="flex items-center text-brand gap-1 md:gap-2">
+        <img src={~p"/images/icons/user.svg"} alt="User" />
+        <span>Entrar</span>
+        <span class="sr-only">Entrar</span>
+      </button>
+
+      <button class="bg-[#0045F3] flex text-white pl-4 pr-3 py-2 items-center justify-center gap-3 rounded-lg">
+        <span class="sr-only">carrinho</span>
+        <img src={~p"/images/icons/cart.svg"} alt="Cart " />
+        <div>
+          <span class="front-bold py-1 px-2 bg-brand rounded-full text-base md:text-xl">0</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</header>
