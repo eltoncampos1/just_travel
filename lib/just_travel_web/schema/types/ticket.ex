@@ -25,6 +25,7 @@ defmodule JustTravelWeb.Schema.Types.Ticket do
   end
 
   enum :category, values: [:adult, :children]
+  enum :actions, values: [:decrease, :delete]
 
   object :ticket_cart do
     field :id, :id

@@ -6,20 +6,21 @@ defmodule JustTravel.Schemas.Cart.Repository do
 
   @spec new(cart_id :: binary()) :: JustTravel.Schemas.Cart.t()
   def new(cart_id) do
-    cart = %Cart{id: cart_id}
-    upsert(cart_id, cart)
+    %Cart{id: cart_id}
+    |> upsert(cart_id)
   end
 
   def add_item(cart_id, item) do
     case find_cart(cart_id) do
       {:ok, cart} ->
-        cart = add(cart, item)
-        upsert(cart_id, cart)
+        cart
+        |> add(item)
+        |> upsert(cart_id)
 
       {:error, :not_found} ->
         with {:ok, cart} <- new(cart_id),
              %Cart{} = cart <- add(cart, item) do
-          upsert(cart_id, cart)
+          upsert(cart, cart_id)
         end
     end
   end
@@ -30,6 +31,89 @@ defmodule JustTravel.Schemas.Cart.Repository do
       [{_cart_id, value}] -> {:ok, value}
     end
   end
+
+  def remove_item(cart_id, item_id, :decrease) do
+    case find_cart(cart_id) do
+      {:ok, cart} ->
+        cart
+        |> do_decrease(item_id)
+        |> upsert(cart_id)
+
+      err ->
+        err
+    end
+  end
+
+  def remove_item(cart_id, item_id, :delete) do
+    case find_cart(cart_id) do
+      {:ok, cart} ->
+        cart
+        |> do_delete(item_id)
+        |> upsert(cart_id)
+
+      err ->
+        err
+    end
+  end
+
+  def do_delete(cart, item_id) do
+    previous_item = find_item(cart.items, item_id)
+    price = Money.multiply(previous_item.item.price, previous_item.qty)
+    discount = Money.multiply(previous_item.item.discount, previous_item.qty)
+    new_price = change_price_on_remove_item(price, discount, cart.total_price)
+    new_items = cart.items -- [previous_item]
+
+    %Cart{
+      cart
+      | items: new_items,
+        total_qty: cart.total_qty - previous_item.qty,
+        total_price: new_price
+    }
+  end
+
+  defp change_price_on_remove_item(price, discount, total_price) do
+    new_price = Money.subtract(price, discount)
+    Money.subtract(total_price, new_price)
+  end
+
+  defp do_decrease(cart, item_id) do
+    case Enum.find_index(cart.items, &(&1.item.id == item_id)) do
+      nil ->
+        cart
+
+      index ->
+        previous_item = find_item(cart.items, item_id)
+
+        new_items =
+          if decrease_total_qty(previous_item.qty) == 0 do
+            cart.items -- [previous_item]
+          else
+            List.replace_at(cart.items, index, %{
+              item: previous_item.item,
+              qty: decrease_total_qty(previous_item.qty)
+            })
+          end
+
+        new_price =
+          change_price_on_remove_item(
+            previous_item.item.price,
+            previous_item.item.discount,
+            cart.total_price
+          )
+
+        total_qty = decrease_total_qty(cart.total_qty)
+
+        %Cart{
+          cart
+          | items: new_items,
+            total_qty: total_qty,
+            total_price: new_price
+        }
+    end
+  end
+
+  defp decrease_total_qty(0), do: 0
+  defp decrease_total_qty(value), do: value - 1
 
   defp add(%Cart{} = cart, item) do
     new_price = calculate_total_price(cart.total_price, item)
@@ -56,12 +140,16 @@ defmodule JustTravel.Schemas.Cart.Repository do
         [%{item: item, qty: 1}] ++ items
 
       index ->
-        previous_item = Enum.find(items, &(&1.item.id == item.id))
+        previous_item = find_item(items, item.id)
         List.replace_at(items, index, %{item: previous_item.item, qty: previous_item.qty + 1})
     end
   end
 
-  defp upsert(cart_id, cart) do
+  defp find_item(items, item_id) do
+    Enum.find(items, &(&1.item.id == item_id))
+  end
+
+  defp upsert(cart, cart_id) do
     :ets.insert(@name, {cart_id, cart})
     {:ok, cart}
   end
