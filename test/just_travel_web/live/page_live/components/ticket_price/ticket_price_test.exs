@@ -27,7 +27,6 @@ defmodule JustTravelWeb.PageLive.Components.TicketPriceTest do
 
       {:ok, view, _html} = live(conn, "/")
 
-
       el = "[data-role=TICKET_PRICE]"
       total_price_el = "[data-role=TOTAL_PRICE]"
       assert has_element?(view, el)
