@@ -23,7 +23,7 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
     location_2 = insert(:location, name: "Paris", country: "France")
 
     for i <- 1..2 do
-      t= insert(:ticket, name: "Travel Paris" <> to_string(i), location: location_2)
+      t = insert(:ticket, name: "Travel Paris" <> to_string(i), location: location_2)
       insert(:ticket_price, ticket: t)
     end
 

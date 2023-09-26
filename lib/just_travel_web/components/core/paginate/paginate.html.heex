@@ -1,5 +1,5 @@
 <nav class="flex items-center font-semibold" data-role="PAGINATE">
-  <button class="w-8">
+  <button class="w-8" data-role="PREV">
     <%= if @options.page - 1 > 0 do %>
       <.link patch={~p"/?#{Map.update(@options, :page, @options.page, &(&1 - 1))}"}>
         <Heroicons.chevron_left solid class="w-4 h-4 fill-brand-dark" />
@@ -24,7 +24,7 @@
     </.link>
   </div>
 
-  <div class="w-8">
+  <div class="w-8" data-role="NEXT">
     <%= if @options.page <= @max_pages do %>
       <.link patch={~p"/?#{Map.update(@options, :page, @options.page, &(&1 + 1))}"}>
         <Heroicons.chevron_right solid class="fill-brand-dark w-4 h-4" />

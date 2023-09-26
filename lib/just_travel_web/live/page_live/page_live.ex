@@ -5,11 +5,6 @@ defmodule JustTravelWeb.PageLive do
   alias JustTravelWeb.PageLive.Components
   alias JustTravelWeb.Core
 
-  @spec handle_params(
-          nil | maybe_improper_list | map,
-          any,
-          atom | %{:assigns => map, optional(any) => any}
-        ) :: {:noreply, any}
   def handle_params(params, _uri, socket) do
     page = String.to_integer(params["page"] || "1")
     per_page = String.to_integer(params["per_page"] || "4")
@@ -39,6 +34,7 @@ defmodule JustTravelWeb.PageLive do
     {tickets, total} = get_tickets(location, options)
 
     assigns = [location: location, tickets: tickets, total: total]
+
     socket =
       socket
       |> assign(:assigns, socket.assigns)
