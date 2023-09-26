@@ -1,0 +1,22 @@
+<form
+  class="w-full flex border border-1 border-gray pl-3  items-center"
+  phx-submit="filter_by_location"
+  data-role="FILTER_BY_LOCATION"
+>
+  <div>
+    <img src={~p"/images/icons/location.svg"} alt="Find" />
+    <span class="sr-only">location icon</span>
+  </div>
+  <input
+    type="text"
+    value={@location}
+    name="location"
+    placeholder="Busque por atração"
+    class="border-0 flex-1 font-inter text-[#9EA5B8] w-full"
+    data-role="INPUT_FILTER"
+  />
+  <button class="border border-gray flex items-center justify-center p-3" type="submit">
+    <img src={~p"/images/icons/search.svg"} alt="Find" />
+    <span class="sr-only">search icon</span>
+  </button>
+</form>
