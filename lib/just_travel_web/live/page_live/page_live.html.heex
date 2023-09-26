@@ -1,1 +1,12 @@
-<div>ok</div>
+<main>
+  <div class="py-4 md:py-9 px-8 md:px-[60px]">
+    <.live_component
+      module={Components.FilterByLocation}
+      id="filter_by_location_input"
+      location={@location}
+    />
+    <div :for={ticket <- @tickets}>
+      <div id={"ticket-#{ticket.id}"}></div>
+    </div>
+  </div>
+</main>
