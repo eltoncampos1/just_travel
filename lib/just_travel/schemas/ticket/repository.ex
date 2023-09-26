@@ -52,7 +52,7 @@ defmodule JustTravel.Schemas.Ticket.Repository do
       |> Repo.all()
 
     total = Repo.aggregate(query, :count)
-    {:ok, tickets: tickets, total: total}
+    {:ok, %{tickets: tickets, total: total}}
   end
 
   defp join_location(queryable) do

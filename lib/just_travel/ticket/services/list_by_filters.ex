@@ -3,7 +3,7 @@ defmodule JustTravel.Ticket.Services.ListByFilters do
   alias JustTravel.Ticket.Commands
 
   @spec execute(filters :: Commands.ListByFilters.t()) ::
-          {:ok, tickets: list(), total: integer} | {:error, term()} | nil | []
+          {:ok, %{tickets: list(), total: integer}} | {:error, term()} | nil | []
   def execute(%Commands.ListByFilters{} = filters) do
     filters
     |> sanitize_filters()

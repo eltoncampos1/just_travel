@@ -16,13 +16,15 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
     location = insert(:location, name: "Disney")
 
     for i <- 1..2 do
-      insert(:ticket, name: "Travel Disney" <> to_string(i), location: location)
+      t = insert(:ticket, name: "Travel Disney" <> to_string(i), location: location)
+      insert(:ticket_price, ticket: t)
     end
 
     location_2 = insert(:location, name: "Paris", country: "France")
 
     for i <- 1..2 do
-      insert(:ticket, name: "Travel Paris" <> to_string(i), location: location_2)
+      t= insert(:ticket, name: "Travel Paris" <> to_string(i), location: location_2)
+      insert(:ticket_price, ticket: t)
     end
 
     %{location_1: location, location_2: location_2}
@@ -98,6 +100,8 @@ defmodule JustTravelWeb.Schema.Queries.TicketTest do
 
     test "returns ticket by id", %{conn: conn} do
       ticket = insert(:ticket, name: "Travel to Rome")
+
+      insert(:ticket_price, ticket: ticket)
 
       conn =
         post(conn, "/api/graphql", %{

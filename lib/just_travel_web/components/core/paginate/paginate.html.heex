@@ -1,4 +1,4 @@
-<nav class="flex items-center font-semibold">
+<nav class="flex items-center font-semibold" data-role="PAGINATE">
   <button class="w-8">
     <%= if @options.page - 1 > 0 do %>
       <.link patch={~p"/?#{Map.update(@options, :page, @options.page, &(&1 - 1))}"}>
