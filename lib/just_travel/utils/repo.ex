@@ -7,6 +7,12 @@ defmodule JustTravel.Utils.Repo do
     do_paginate(queryable, page, per_page)
   end
 
+  defp do_paginate(queryable, page, per_page) when is_binary(per_page) or is_binary(per_page) do
+    page = String.to_integer(page)
+    per_page = String.to_integer(per_page)
+    do_paginate(queryable, page, per_page)
+  end
+
   defp do_paginate(queryable, page, per_page) when page > 0 do
     offset = per_page * (page - 1)
 
@@ -15,5 +21,5 @@ defmodule JustTravel.Utils.Repo do
       offset: ^offset
   end
 
-  defp do_paginate(queryable, page, per_page), do: do_paginate(queryable, 1, per_page)
+  defp do_paginate(queryable, _page, per_page), do: do_paginate(queryable, 1, per_page)
 end

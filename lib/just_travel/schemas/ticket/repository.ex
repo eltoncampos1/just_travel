@@ -36,19 +36,46 @@ defmodule JustTravel.Schemas.Ticket.Repository do
   end
 
   def list(filters) when is_map(filters) do
-    from(tkt in Schemas.Ticket, as: :ticket)
-    |> join_location()
-    |> apply_filters(filters)
-    |> maybe_paginate?(filters)
-    |> Repo.all()
-    |> Repo.preload([:location, :price, :discount])
+    query =
+      from(tkt in Schemas.Ticket, as: :ticket)
+      |> join_location()
+      |> join_price()
+      |> join_discount()
+      |> apply_filters(filters)
+
+    tickets =
+      query
+      |> maybe_paginate?(filters)
+      |> preload([:location, :price, :discount])
+      |> select([ticket: t], t)
+      |> order_by(asc: :inserted_at)
+      |> Repo.all()
+
+    total = Repo.aggregate(query, :count)
+    {:ok, tickets: tickets, total: total}
   end
 
   defp join_location(queryable) do
     queryable
-    |> join(:left, [ticket: tkt], loc in Schemas.Location,
+    |> join(:inner, [ticket: tkt], loc in Schemas.Location,
       as: :location,
       on: loc.id == tkt.location_id
+    )
+  end
+
+  defp join_price(queryable) do
+    queryable
+    |> join(:inner, [ticket: tkt], pr in Schemas.TicketPrice,
+      as: :price,
+      on: pr.ticket_id == tkt.id
+    )
+  end
+
+  defp join_discount(queryable) do
+    queryable
+    |> join(:left, [ticket: tkt], disc in Schemas.TicketDiscount,
+      as: :discount,
+      on: disc.ticket_id == tkt.id
     )
   end
 
