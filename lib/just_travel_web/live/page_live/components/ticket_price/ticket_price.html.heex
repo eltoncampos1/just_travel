@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-1 lg:gap-4 lg:min-w-[178px]">
+<div class="flex flex-col gap-1 lg:gap-4 lg:min-w-[178px]" data-role="TICKET_PRICE">
   <%= if !is_nil(@discount) do %>
     <div>
       <span class="text-xs text-[#858FA6]">
@@ -9,7 +9,7 @@
         <span class="text-brand-dark text-xs lg:font-sm mb-2 block">
           R$
         </span>
-        <strong class="text-brand font-bold text-lg lg:text-2xl">
+        <strong class="text-brand font-bold text-lg lg:text-2xl" data-role="TOTAL_PRICE">
           <%= Money.subtract(@price, @discount.discount_amount) %>
         </strong>
       </div>
@@ -19,7 +19,7 @@
       <span class="text-brand-dark text-xs lg:font-sm mb-2 block">
         R$
       </span>
-      <strong class="text-brand font-bold text-lg lg:text-2xl">
+      <strong class="text-brand font-bold text-lg lg:text-2xl" data-role="TOTAL_PRICE">
         <%= @price %>
       </strong>
     </div>

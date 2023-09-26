@@ -6,12 +6,8 @@
       location={@location}
     />
     <ul class="flex flex-col gap-2 md:gap-4 mt-4">
-      <li :for={ticket <- @tickets}>
-        <.live_component
-          module={Components.TicketCard}
-          id={"TICKET_CARD_COMPONENT-#{ticket.id}"}
-          ticket={ticket}
-        />
+      <li :for={ticket <- @tickets} id={"ticket-#{ticket.id}"}>
+        <.live_component module={Components.TicketCard} ticket={ticket} id={ticket.id} />
       </li>
     </ul>
   </div>
