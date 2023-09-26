@@ -7,19 +7,30 @@ defmodule JustTravel.Utils.RepoTest do
     test "should paginate" do
       loc = insert(:location)
       per_page = 4
-      insert_list(100, :ticket, location: loc)
 
-      assert length(Repository.list()) == 100
-      assert length(Repository.list(%{paginate: %{page: 1, per_page: per_page}})) == per_page
+      for _i <- 1..10 do
+        t = insert(:ticket, location: loc)
+        insert(:ticket_price, ticket: t)
+      end
+
+      assert length(Repository.list()) == 10
+      {:ok, %{tickets: t}} = Repository.list(%{paginate: %{page: 1, per_page: per_page}})
+      assert length(t) == per_page
     end
 
     test "should paginate if no page was sent" do
       loc = insert(:location)
       per_page = 4
-      insert_list(100, :ticket, location: loc)
 
-      assert length(Repository.list()) == 100
-      assert length(Repository.list(%{paginate: %{per_page: per_page}})) == per_page
+      for _i <- 1..10 do
+        t = insert(:ticket, location: loc)
+        insert(:ticket_price, ticket: t)
+      end
+
+      assert length(Repository.list()) == 10
+
+      {:ok, %{tickets: t}} = Repository.list(%{paginate: %{per_page: per_page}})
+      assert length(t) == per_page
     end
   end
 end

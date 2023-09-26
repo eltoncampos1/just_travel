@@ -7,7 +7,6 @@ defmodule JustTravelWeb.Core.PaginateTest do
 
     select = "[data-role=SELECT_PAGE]"
 
-    open_browser(view)
     assert has_element?(view, select)
     assert element(view, select <> ">select>option", "0")
   end
