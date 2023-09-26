@@ -1,12 +1,14 @@
 <main>
-  <div class="py-4 md:py-9 px-8 md:px-[60px]">
+  <div class="py-4 md:py-9 px-4 md:px-[60px]">
     <.live_component
       module={Components.FilterByLocation}
       id="filter_by_location_input"
       location={@location}
     />
-    <div :for={ticket <- @tickets}>
-      <div id={"ticket-#{ticket.id}"}></div>
-    </div>
+    <ul class="flex flex-col gap-2 md:gap-4 mt-4">
+      <li :for={ticket <- @tickets} id={"ticket-#{ticket.id}"}>
+        <.live_component module={Components.TicketCard} ticket={ticket} id={ticket.id} />
+      </li>
+    </ul>
   </div>
 </main>

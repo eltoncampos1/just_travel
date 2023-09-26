@@ -8,6 +8,10 @@ defmodule JustTravelWeb.PageLive.Components.FilterByLocationTest do
     t2 = insert(:ticket, location: location)
     t3 = insert(:ticket)
 
+    for t <- [t1, t2, t3] do
+      insert(:ticket_price, ticket: t)
+    end
+
     {:ok, view, _html} = live(conn, "/")
 
     filter = "[data-role=FILTER_BY_LOCATION]"
