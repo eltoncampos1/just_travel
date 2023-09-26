@@ -1,10 +1,9 @@
 defmodule JustTravel.Ticket.Services.ListByFilters do
   alias JustTravel.Schemas.Ticket.Repository
   alias JustTravel.Ticket.Commands
-  alias JustTravel.Schemas
 
   @spec execute(filters :: Commands.ListByFilters.t()) ::
-          {:ok, list(Schemas.Ticket.t())} | {:error, term()} | nil | []
+          {:ok, tickets: list(), total: integer} | {:error, term()} | nil | []
   def execute(%Commands.ListByFilters{} = filters) do
     filters
     |> sanitize_filters()
