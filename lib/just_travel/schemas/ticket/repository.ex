@@ -7,7 +7,7 @@ defmodule JustTravel.Schemas.Ticket.Repository do
 
   @spec list_tickets_by_location_name(location_name :: String.t()) ::
           list(Schemas.Ticket.t()) | []
-  def list_tickets_by_location_name(location_name) do
+  def list_tickets_by_location_name(location_name, preloads \\ []) do
     from(tkt in Schemas.Ticket, as: :ticket)
     |> join(:left, [ticket: tkt], loc in Schemas.Location,
       as: :location,
@@ -16,6 +16,7 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     |> Schemas.Location.Query.by_location_name(location_name)
     |> select([ticket: tkt], tkt)
     |> Repo.all()
+    |> Repo.preload(preloads)
   end
 
   def by_ticket_id(ticket_id, preloads \\ []) do
@@ -29,8 +30,9 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     end
   end
 
-  def list do
+  def list() do
     Repo.all(Ticket)
+    |> Repo.preload([:location, :price, :discount])
   end
 
   def list(filters) when is_map(filters) do
@@ -39,6 +41,7 @@ defmodule JustTravel.Schemas.Ticket.Repository do
     |> apply_filters(filters)
     |> maybe_paginate?(filters)
     |> Repo.all()
+    |> Repo.preload([:location, :price, :discount])
   end
 
   defp join_location(queryable) do
