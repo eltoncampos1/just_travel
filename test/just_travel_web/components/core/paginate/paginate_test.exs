@@ -5,11 +5,10 @@ defmodule JustTravelWeb.Core.PaginateTest do
   test "paginate", %{conn: conn} do
     {:ok, view, _html} = live(conn, "/")
 
-    paginate = "[data-role=PAGINATE]"
+    select = "[data-role=SELECT_PAGE]"
 
     open_browser(view)
-    assert has_element?(view, paginate)
-    assert has_element?(view, "[data-role=PREV]")
-    assert has_element?(view, "[data-role=NEXT]")
+    assert has_element?(view, select)
+    assert element(view, select <> ">select>option", "0")
   end
 end
