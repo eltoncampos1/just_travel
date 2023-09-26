@@ -1,0 +1,43 @@
+<div class="flex gap-2 lg:gap-6 shadow-sm">
+  <div>
+    <img
+      src={~p"/images/ticket_mock.png"}
+      alt={@ticket.name}
+      class="w-32 h-32 lg:w-52 lg:h-52 object-cover"
+    />
+  </div>
+  <div class="flex flex-1 justify-between  items-center">
+    <div class="flex flex-col  border-r border-gray flex-1 gap-4 lg:gap-11">
+      <div class="flex-1">
+        <h3 class="text-brand-dark font-medium text-l g lg:text-[22px] "><%= @ticket.name %></h3>
+        <div class="flex items-center gap-1">
+          <img src={~p"/images/icons/location.svg"} alt={@ticket.location.name} class="w-4" />
+          <p class="text-brand-dark text-xs md:text-sm">
+            <%= @ticket.name %> - <%= @ticket.location.name %>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex mt-auto items-center gap-1">
+          <span class="bg-brand p-2 lg:p-3 rounded-sm text-white text-xs lg:text-sm">6.3</span>
+          <span class="text-brand-dark text-xs lg:text-sm">
+            Excellent
+          </span>
+          <span class="text-gray-medium text-xs lg:text-sm">
+            (432 Reviews)
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ml-4 md:ml-6">
+      <.live_component
+        module={Components.TicketPrice}
+        price={@ticket.price.price}
+        discount={@ticket.discount}
+        id={@ticket.id}
+      />
+    </div>
+  </div>
+</div>
