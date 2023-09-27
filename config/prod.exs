@@ -23,15 +23,7 @@ app = System.get_env("APP_NAME") || "just-travel"
 
 config :just_travel, JustTravelWeb.Endpoint,
   url: [host: host, port: 80, scheme: "https"],
-  check_origin: [
-    "https://just-travel.gigalixirapp.com/",
-    "wss://just-travel.gigalixirapp.com/",
-    "//just-travel.gigalixirapp.com/",
-    "//localhost",
-    "//*.just-travel.gigalixirapp.com/*",
-    "//.#{app}.gigalixir.com/live",
-    "//.#{app}.gigalixir.com:4000"
-  ]
+  check_origin: false
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
