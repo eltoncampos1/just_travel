@@ -11,14 +11,14 @@
 
   <div
     :for={current_page <- (@options.page - 2)..(@options.page + 1)}
-    :if={current_page > 0 && current_page < @max_pages}
+    :if={current_page > 0 && current_page < @max_pages && length(@items) >= @options.per_page}
     class={[current_page == @options.page && "text-brand-dark", "text-brand", "w-8"]}
   >
     <.link patch={~p"/?#{Map.put(@options, :page, current_page)}"}>
       <%= current_page %>
     </.link>
   </div>
-  <div :if={@options.page + 2 <= @max_pages} class="w-8">
+  <div :if={@options.page + 2 <= @max_pages && length(@items) >= @options.per_page} class="w-8">
     <.link patch={~p"/?#{Map.put(@options, :page, @options.page + 3)}"}>
       ...
     </.link>
