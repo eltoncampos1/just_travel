@@ -4,6 +4,7 @@ defmodule JustTravelWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
+
   @session_options [
     store: :cookie,
     key: "_just_travel_key",
@@ -14,7 +15,13 @@ defmodule JustTravelWeb.Endpoint do
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [
       connect_info: [session: @session_options],
-      check_origin: false,
+      check_origin: [
+        "https://just-travel.gigalixirapp.com/",
+        "wss://just-travel.gigalixirapp.com/",
+        "//just-travel.gigalixirapp.com/",
+        "//localhost",
+        "//*.just-travel.gigalixirapp.com/*"
+      ],
       long_polling: false
     ]
 

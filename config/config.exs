@@ -23,11 +23,11 @@ config :just_travel, JustTravelWeb.Endpoint,
   pubsub_server: JustTravel.PubSub,
   live_view: [signing_salt: "0SD8j134"],
   check_origin: [
-        "https://just-travel.gigalixirapp.com/",
-        "//just-travel.gigalixirapp.com/",
-        "//.*just-travel.gigalixirapp.com/",
-        "//localhost"
-      ]
+    "https://just-travel.gigalixirapp.com/",
+    "//just-travel.gigalixirapp.com/",
+    "//.*just-travel.gigalixirapp.com/",
+    "//localhost"
+  ]
 
 # Configures the mailer
 #

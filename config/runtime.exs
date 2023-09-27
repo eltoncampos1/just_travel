@@ -59,9 +59,20 @@ if config_env() == :prod do
       port: port,
       check_origin: [
         "https://just-travel.gigalixirapp.com/",
+        "wss://just-travel.gigalixirapp.com/",
         "//just-travel.gigalixirapp.com/",
-        "//localhost"
+        "//localhost",
         "//*.just-travel.gigalixirapp.com/*"
+      ],
+      https: [
+        port: port,
+        check_origin: [
+          "https://just-travel.gigalixirapp.com/",
+          "wss://just-travel.gigalixirapp.com/",
+          "//just-travel.gigalixirapp.com/",
+          "//localhost",
+          "//*.just-travel.gigalixirapp.com/*"
+        ]
       ]
     ],
     secret_key_base: secret_key_base
