@@ -48,19 +48,6 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-   socket "/", Phoenix.LiveView.Socket,
-    websocket: [
-      connect_info: [session: @session_options],
-      check_origin: [
-        "https://just-travel.gigalixirapp.com/",
-        "wss://just-travel.gigalixirapp.com/",
-        "//just-travel.gigalixirapp.com/",
-        "//localhost",
-        "//*.just-travel.gigalixirapp.com/*"
-      ],
-      long_polling: false
-    ]
-
   config :just_travel, JustTravelWeb.Endpoint,
     url: [host: "https://just-travel.gigalixirapp.com/", port: 443, scheme: "https"],
     http: [

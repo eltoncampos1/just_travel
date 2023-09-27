@@ -5,7 +5,6 @@ defmodule JustTravelWeb.Endpoint do
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
 
-
   @session_options [
     store: :cookie,
     key: "_just_travel_key",
