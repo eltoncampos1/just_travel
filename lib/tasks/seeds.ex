@@ -4,28 +4,29 @@ defmodule Tasks.Seeds do
 
   def run do
     for _i <- 1..1000 do
-      t = Enum.random([
-        %{city: "Tokyo", country: "japan"},
-        %{city: "Osaka", country: "japan"},
-        %{city: "Shibuya", country: "japan"},
-        %{city: "Hiorshima", country: "Japan"},
-        %{city: "Nova york", country: "EUA"},
-        %{city: "Disney", country: "EUA"},
-        %{city: "Las vegas", country: "EUA"},
-        %{city: "California", country: "EUA"},
-        %{city: "Orlando", country: "EUA"},
-        %{city: "Paris", country: "França"},
-        %{city: "Marselha", country: "França"},
-        %{city: "Lyon", country: "França"},
-        %{city: "Joao pessoa", country: "Brasil"},
-        %{city: "Gramado", country: "Brasil"},
-        %{city: "Amazonia", country: "Brasil"}
-      ])
+      t =
+        Enum.random([
+          %{city: "Tokyo", country: "japan"},
+          %{city: "Osaka", country: "japan"},
+          %{city: "Shibuya", country: "japan"},
+          %{city: "Hiorshima", country: "Japan"},
+          %{city: "Nova york", country: "EUA"},
+          %{city: "Disney", country: "EUA"},
+          %{city: "Las vegas", country: "EUA"},
+          %{city: "California", country: "EUA"},
+          %{city: "Orlando", country: "EUA"},
+          %{city: "Paris", country: "França"},
+          %{city: "Marselha", country: "França"},
+          %{city: "Lyon", country: "França"},
+          %{city: "Joao pessoa", country: "Brasil"},
+          %{city: "Gramado", country: "Brasil"},
+          %{city: "Amazonia", country: "Brasil"}
+        ])
 
       location =
         %{
           name: t.city,
-          country: t.country,
+          country: t.country
         }
         |> Schemas.Location.changeset()
         |> Repo.insert!()
