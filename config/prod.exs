@@ -18,12 +18,11 @@ config :swoosh, :api_client, JustTravel.Finch
 # Do not print debug messages in production
 config :logger, level: :info
 
-port = System.get_env("PORT") || 4000
 host = System.get_env("PHX_HOST") || "localhost"
 app = System.get_env("APP_NAME") || "just-travel"
 
 config :just_travel, JustTravelWeb.Endpoint,
-  url: [host: host, port: 4000, scheme: "https"],
+  url: [host: host, port: 80, scheme: "https"],
   check_origin: [
     "https://just-travel.gigalixirapp.com/",
     "wss://just-travel.gigalixirapp.com/",
@@ -32,8 +31,7 @@ config :just_travel, JustTravelWeb.Endpoint,
     "//*.just-travel.gigalixirapp.com/*",
     "//.#{app}.gigalixir.com/live",
     "//.#{app}.gigalixir.com:4000"
-  ],
-  port: port
+  ]
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
