@@ -1,0 +1,89 @@
+<div
+  id="shop-cart"
+  class="absolute hidden z-50  inset-x-0 mt-px bg-white p-6 shadow-lg sm:px-6 lg:left-auto lg:right-10 lg:top-full lg:-mr-1.5 lg:mt-3  lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5 "
+>
+  <h2 class="sr-only">Shopping Cart</h2>
+  <%= if length(@cart.items) == 0 do %>
+    <.empty_cart />
+  <% else %>
+    <section class="flex gap-4  flex-col">
+      <span class="text-brand-dark font-semibold texr-base font-inter block text-left">
+        Ingressos
+      </span>
+      <div :for={ticket <- @cart.items}>
+        <div class="flex gap-4">
+          <div>
+            <img src={~p"/images/ticket_mock.png"} alt="location" class="w-14 h-15 " />
+          </div>
+          <div class="flex flex-col justify-between">
+            <div class="flex text-gray-dark text-base lg:text-base font-normal gap-5">
+              <h5><%= ticket.item.name %> - <%= Date.to_iso8601(ticket.item.date) %></h5>
+              <img src={~p"/images/icons/trash.svg"} alt="deletar" class="w-4 h-4" />
+            </div>
+            <span class="font-inter text-base text-[#989AA7]">
+              <%= translate_category(ticket.item.category) %>: <%= ticket.item.price %>
+            </span>
+          </div>
+        </div>
+        <div class=" w-full flex gap-4">
+          <div class="w-14 h-14 "></div>
+          <div class="w-full">
+            <ul class="flex flex-col gap-3 pb-7">
+              <li class="flex items-center justify-between text-base font-normal font-inter text-gray-dark">
+                <span>Qtd <%= ticket.qty %></span>
+                <span><%= ticket.item.price %></span>
+              </li>
+              <li class="flex items-center justify-between text-bold text-base text-brand-dark">
+                <strong>Subtotal</strong>
+                <strong><%= calculate_price(ticket) %></strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <ul class="flex flex-col gap-3 border-y border-[#E7E9ED] py-6">
+        <li class="flex items-center justify-between text-base font-normal font-inter text-gray-dark">
+          <span>
+            ingressos
+          </span>
+          <span><%= @cart.total_price %></span>
+        </li>
+
+        <li class="flex items-center justify-between text-bold text-base text-brand-dark">
+          <strong>Subtotal</strong>
+          <strong><%= calculate_discount(@cart).total %></strong>
+        </li>
+
+        <li class="flex items-center justify-between text-base font-normal font-inter text-gray-dark">
+          <span>
+            1X de  com desconto de
+            <span class="text-[#00919E] font-normal">
+              (<%= calculate_discount(@cart).percent %>%)
+            </span>
+          </span>
+          <span class="text-[#00919E] font-semibold">
+            <%= calculate_discount(@cart).discount %>
+          </span>
+        </li>
+
+        <li class="flex items-center justify-between text-base font-normal font-inter text-gray-dark">
+          <span>
+            10X Sem juros de <%= @cart.total_price %>
+          </span>
+          <span><%= @cart.total_price %></span>
+        </li>
+
+        <li class="flex items-center justify-between text-bold text-base text-brand-dark">
+          <strong>Valor total</strong>
+          <span class="text-brand text-base font-normal leading-8"><%= @cart.total_price %></span>
+        </li>
+      </ul>
+    </section>
+    <button class="bg-[#0045F3] w-full py-4 px-8 rounded-md text-base font-inter font-semibold text-white">
+      Ir para o check out
+    </button>
+  <% end %>
+</div>
