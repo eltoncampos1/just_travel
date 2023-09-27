@@ -1,7 +1,12 @@
 <div class="flex gap-2 lg:gap-6 shadow-sm relative" data-role="TICKET_CARD">
   <div class="relative">
-    <button class="absolute top-2 right-2">
-      <img src={~p"/images/icons/heart.svg"} alt="favorite" class="fill-red-500" />
+    <button class="absolute top-2 right-2" phx-click="add_to_cart" phx-value-id={@ticket.id}>
+      <img
+        src={~p"/images/icons/heart.svg"}
+        alt="favorite"
+        class="fill-red-500"
+        title="adicionar ao carrinho"
+      />
     </button>
     <img
       src={~p"/images/ticket_mock.png"}

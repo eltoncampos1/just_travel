@@ -19,7 +19,14 @@
           <div class="flex flex-col justify-between">
             <div class="flex text-gray-dark text-base lg:text-base font-normal gap-5">
               <h5><%= ticket.item.name %> - <%= Date.to_iso8601(ticket.item.date) %></h5>
-              <img src={~p"/images/icons/trash.svg"} alt="deletar" class="w-4 h-4" />
+              <button phx-click="remove_from_cart" phx-value-id={ticket.item.id}>
+                <img
+                  src={~p"/images/icons/trash.svg"}
+                  alt="deletar"
+                  class="w-4 h-4"
+                  title="deletar"
+                />
+              </button>
             </div>
             <span class="font-inter text-base text-[#989AA7]">
               <%= translate_category(ticket.item.category) %>: <%= ticket.item.price %>

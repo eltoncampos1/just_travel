@@ -18,8 +18,11 @@ defmodule JustTravel.Server.Cart do
     {:ok, name}
   end
 
-  def create(cart_id), do: GenServer.cast(@name, {:create, cart_id})
   def add(cart_id, item), do: GenServer.cast(@name, {:add, cart_id, item})
+  def create(cart_id), do: GenServer.cast(@name, {:create, cart_id})
+
+  def delete(cart_id, item_id), do: GenServer.cast(@name, {:delete, cart_id, item_id})
+
   def get(cart_id), do: GenServer.call(@name, {:get, cart_id})
 
   def handle_cast({:create, cart_id}, name) do
@@ -34,11 +37,23 @@ defmodule JustTravel.Server.Cart do
   def handle_cast({:add, cart_id, item}, name) do
     case CartRepository.find_cart(cart_id) do
       {:error, :not_found} ->
-        cart = CartRepository.new(cart_id)
-        CartRepository.add_item(cart, item)
+        {:ok, _cart} = CartRepository.new(cart_id)
+        CartRepository.add_item(cart_id, item)
 
       {:ok, _} ->
         CartRepository.add_item(cart_id, item)
+    end
+
+    {:noreply, name}
+  end
+
+  def handle_cast({:delete, cart_id, item_id}, name) do
+    case CartRepository.find_cart(cart_id) do
+      {:error, :not_found} ->
+        send(JustTravelWeb.PageLive, {:delete_error, cart_id})
+
+      {:ok, _} ->
+        CartRepository.remove_item(cart_id, item_id, :delete)
     end
 
     {:noreply, name}

@@ -23,7 +23,7 @@ defmodule JustTravelWeb.PageLive.Components.ShopCart do
   def calculate_discount(cart) do
     total = Enum.reduce(cart.items, Money.new(0), &Money.add(&1.item.price, &2))
     discount = Enum.reduce(cart.items, Money.new(0), &Money.add(&1.item.discount, &2))
-    percent = discount.amount / total.amount * 100
+    percent = (discount.amount / total.amount * 100) |> :erlang.float_to_binary(decimals: 2)
 
     total_discount = Money.subtract(discount, total)
     %{percent: percent, discount: total_discount, total: total}
