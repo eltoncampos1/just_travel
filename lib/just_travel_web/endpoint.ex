@@ -12,7 +12,7 @@ defmodule JustTravelWeb.Endpoint do
     same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket,
+  socket "/", Phoenix.LiveView.Socket,
     websocket: [
       connect_info: [session: @session_options],
       check_origin: [
