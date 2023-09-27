@@ -11,10 +11,11 @@ config :just_travel,
   ecto_repos: [JustTravel.Repo]
 
 host = System.get_env("PHX_HOST") || "localhost"
+port = String.to_integer(System.get_env("PORT") || "4000")
 
 # Configures the endpoint
 config :just_travel, JustTravelWeb.Endpoint,
-  url: [host: host],
+  url: [host: host, port: port],
   render_errors: [
     formats: [html: JustTravelWeb.ErrorHTML, json: JustTravelWeb.ErrorJSON],
     layout: false
