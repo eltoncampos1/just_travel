@@ -16,7 +16,7 @@ defmodule JustTravelWeb.Endpoint do
       connect_info: [session: @session_options],
       check_origin: [
         "//just-travel.gigalixirapp.com/",
-        "//just-travel.gigalixirapp.com/*"
+        "//just-travel.gigalixirapp.com/*",
         "//localhost",
       ]
     ]
