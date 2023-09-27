@@ -6,7 +6,7 @@ defmodule JustTravelWeb.PageLive.Components.ShopCart do
 
   def empty_cart(assigns) do
     ~H"""
-    <div class="w-full min-w-lg flex flex-col items-center">
+    <div class="w-full min-w-lg flex flex-col items-center" data-role="EMPTY_CART">
       <p>Seu carrinho esta vazio</p>
       <Heroicons.shopping_cart solid class="w-6 h-6" />
     </div>
