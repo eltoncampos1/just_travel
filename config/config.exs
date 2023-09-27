@@ -10,9 +10,11 @@ import Config
 config :just_travel,
   ecto_repos: [JustTravel.Repo]
 
+  host = System.get_env("PHX_HOST") || "localhost"
+
 # Configures the endpoint
 config :just_travel, JustTravelWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: host],
   render_errors: [
     formats: [html: JustTravelWeb.ErrorHTML, json: JustTravelWeb.ErrorJSON],
     layout: false
