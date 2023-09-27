@@ -17,7 +17,7 @@ defmodule JustTravelWeb.Endpoint do
       check_origin: [
         "//just-travel.gigalixirapp.com/",
         "//just-travel.gigalixirapp.com/*",
-        "//localhost",
+        "//localhost"
       ]
     ]
 
