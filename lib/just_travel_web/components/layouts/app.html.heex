@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-2xl lg:max-w-[1440px] w-full">
+<div class="mx-auto max-w-2xl lg:max-w-[1440px] w-full relative border border-12">
   <.flash kind={:info} title="Success!" flash={@flash} />
   <.flash kind={:error} title="Error!" flash={@flash} />
   <.flash
@@ -12,6 +12,6 @@
   >
     Attempting to reconnect <Heroicons.arrow_path class="ml-1 w-3 h-3 inline animate-spin" />
   </.flash>
-  <.live_component module={JustTravelWeb.Components.Core.Header} id="Header" />
+  <.live_component module={JustTravelWeb.Components.Core.Header} id="Header" cart={@cart} />
   <%= @inner_content %>
 </div>

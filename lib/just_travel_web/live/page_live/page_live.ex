@@ -6,6 +6,7 @@ defmodule JustTravelWeb.PageLive do
   alias JustTravelWeb.Core
 
   def handle_params(params, _uri, socket) do
+    cart = socket.assigns.cart
     page = String.to_integer(params["page"] || "1")
     per_page = String.to_integer(params["per_page"] || "4")
     location = Map.get(socket.assigns, :location, "")
@@ -20,7 +21,8 @@ defmodule JustTravelWeb.PageLive do
       tickets: tickets,
       total: total,
       location: location,
-      max_pages: max_pages
+      max_pages: max_pages,
+      cart: cart
     ]
 
     socket = assign(socket, assigns)
