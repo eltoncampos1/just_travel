@@ -20,7 +20,7 @@ defmodule JustTravel.Cart.Commands.RemoveCartItem do
   defp validate_uuid(changeset, field) do
     case get_field(changeset, field) do
       nil -> add_error(changeset, field, "`#{field} is Required`")
-      {:ok, id} -> validate(changeset, field, id)
+      value  -> validate(changeset, field, value)
     end
   end
 
