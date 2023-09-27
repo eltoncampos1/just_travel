@@ -61,6 +61,7 @@ if config_env() == :prod do
         "https://just-travel.gigalixirapp.com/",
         "//just-travel.gigalixirapp.com/",
         "//localhost"
+        "//*.just-travel.gigalixirapp.com/*"
       ]
     ],
     secret_key_base: secret_key_base

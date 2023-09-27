@@ -25,6 +25,7 @@ config :just_travel, JustTravelWeb.Endpoint,
   check_origin: [
         "https://just-travel.gigalixirapp.com/",
         "//just-travel.gigalixirapp.com/",
+        "//.*just-travel.gigalixirapp.com/",
         "//localhost"
       ]
 

@@ -14,11 +14,8 @@ defmodule JustTravelWeb.Endpoint do
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [
       connect_info: [session: @session_options],
-      check_origin: [
-        "https://just-travel.gigalixirapp.com/",
-        "//just-travel.gigalixirapp.com/",
-        "//localhost"
-      ]
+      check_origin: false,
+      long_polling: false
     ]
 
   # Serve at "/" the static files from "priv/static" directory.
