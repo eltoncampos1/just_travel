@@ -36,6 +36,7 @@ defmodule JustTravel.Ticket.Services.AddToCart do
   defp build_params(%JustTravel.Schemas.Ticket{} = ticket) do
     %{
       id: ticket.id,
+      name: ticket.name,
       price: ticket.price.price,
       description: ticket.description,
       date: ticket.date,
