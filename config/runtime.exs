@@ -49,6 +49,8 @@ if config_env() == :prod do
       """
 
   port = System.get_env("PORT") || 4000
+  host = System.get_env("PHX_HOST") || "localhost"
+  app = System.get_env("APP_NAME") || "just-travel"
 
   config :just_travel, JustTravelWeb.Endpoint,
     url: [host: "https://just-travel.gigalixirapp.com/", port: 443, scheme: "https"],
@@ -64,7 +66,9 @@ if config_env() == :prod do
         "wss://just-travel.gigalixirapp.com/",
         "//just-travel.gigalixirapp.com/",
         "//localhost",
-        "//*.just-travel.gigalixirapp.com/*"
+        "//*.just-travel.gigalixirapp.com/*",
+        "//.#{app}.gigalixir.com/live",
+        "//.#{app}.gigalixir.com:4000"
       ],
       https: [
         port: port,
@@ -73,7 +77,9 @@ if config_env() == :prod do
           "wss://just-travel.gigalixirapp.com/",
           "//just-travel.gigalixirapp.com/",
           "//localhost",
-          "//*.just-travel.gigalixirapp.com/*"
+          "//*.just-travel.gigalixirapp.com/*",
+          "//.#{app}.gigalixir.com/live",
+          "//.#{app}.gigalixir.com:4000"
         ]
       ]
     ],
