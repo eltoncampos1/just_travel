@@ -48,6 +48,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  port = System.get_env("PORT") || 4000
+
   config :just_travel, JustTravelWeb.Endpoint,
     url: [host: "https://just-travel.gigalixirapp.com/", port: 443, scheme: "https"],
     http: [
