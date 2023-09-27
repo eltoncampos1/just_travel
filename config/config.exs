@@ -18,7 +18,8 @@ config :just_travel, JustTravelWeb.Endpoint,
     layout: false
   ],
   pubsub_server: JustTravel.PubSub,
-  live_view: [signing_salt: "0SD8j134"]
+  live_view: [signing_salt: "0SD8j134"],
+  check_origin: false
 
 # Configures the mailer
 #
