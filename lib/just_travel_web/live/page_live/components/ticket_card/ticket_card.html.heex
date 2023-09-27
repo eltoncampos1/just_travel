@@ -1,5 +1,8 @@
-<div class="flex gap-2 lg:gap-6 shadow-sm" data-role="TICKET_CARD">
-  <div>
+<div class="flex gap-2 lg:gap-6 shadow-sm relative" data-role="TICKET_CARD">
+  <div class="relative">
+    <button class="absolute top-2 right-2">
+      <img src={~p"/images/icons/heart.svg"} alt="favorite" class="fill-red-500" />
+    </button>
     <img
       src={~p"/images/ticket_mock.png"}
       alt={@ticket.name}

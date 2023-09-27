@@ -36,13 +36,17 @@ defmodule JustTravel.Ticket.Services.AddToCart do
   defp build_params(%JustTravel.Schemas.Ticket{} = ticket) do
     %{
       id: ticket.id,
+      name: ticket.name,
       price: ticket.price.price,
       description: ticket.description,
       date: ticket.date,
       category: ticket.price.category,
       location: ticket.location.name,
       country: ticket.location.country,
-      discount: ticket.discount.discount_amount
+      discount: get_discount(ticket.discount)
     }
   end
+
+  def get_discount(nil), do: Money.new(0)
+  def get_discount(discount), do: Map.get(discount, :discount_amount, Money.new(0))
 end

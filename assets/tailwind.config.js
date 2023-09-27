@@ -16,7 +16,8 @@ module.exports = {
         brand: "#4070F4",
         "brand-dark": "#0A2156",
         gray: "#E7E9ED",
-        "gray-medium": "#9EA5B8"
+        "gray-medium": "#9EA5B8",
+        "gray-dark": "#646981"
       }
     },
   },

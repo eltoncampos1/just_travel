@@ -29,7 +29,9 @@ defmodule JustTravelWeb.Router do
   scope "/", JustTravelWeb do
     pipe_through :browser
 
-    live "/", PageLive, :home
+    live_session :cart_session, on_mount: JustTravelWeb.Middlewares.CartSession do
+      live "/", PageLive, :home
+    end
   end
 
   # Other scopes may use custom stacks.

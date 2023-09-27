@@ -2,10 +2,11 @@ defmodule JustTravel.Ticket.Commands.AddToCart do
   use JustTravel.EmbeddedSchema
 
   @required [:id, :price, :description, :location, :country, :category, :date]
-  @optional [:discount]
+  @optional [:discount, :name]
 
   embedded_schema do
     field :id, :binary_id
+    field :name, :string
     field :price, Money.Ecto.Type
     field :description, :string
     field :category, Ecto.Enum, values: [:adult, :children]
