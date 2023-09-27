@@ -1,4 +1,15 @@
-<main class="" id="cart-session" phx-hook="CartSession">
+<main
+  class=""
+  id="cart-session"
+  phx-hook="CartSession"
+  phx-click={
+    JS.toggle(
+      to: "#shop-cart",
+      in: "transition ease-in duration-150 opacity-100",
+      out: "transition ease-in duration-150 opacity-0"
+    )
+  }
+>
   <div class="py-4 md:py-9 px-4 md:px-[60px]">
     <.live_component
       module={Components.FilterByLocation}

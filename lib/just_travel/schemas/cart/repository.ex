@@ -3,6 +3,7 @@ defmodule JustTravel.Schemas.Cart.Repository do
   alias JustTravel.Server.Cart, as: CartServer
 
   @name CartServer.server_name()
+  @topic "@cart_session"
 
   @spec new(cart_id :: binary()) :: JustTravel.Schemas.Cart.t()
   def new(cart_id) do
@@ -10,12 +11,26 @@ defmodule JustTravel.Schemas.Cart.Repository do
     |> upsert(cart_id)
   end
 
+  def broadcast(cart_id, message) do
+    Phoenix.PubSub.broadcast(JustTravel.PubSub, "#{topic()}:" <> cart_id, message)
+  end
+
+  def subscribe_pubsub(cart_id) do
+    Phoenix.PubSub.subscribe(JustTravel.PubSub, "#{topic()}:" <> cart_id)
+  end
+
+  def topic, do: @topic
+
   def add_item(cart_id, item) do
     case find_cart(cart_id) do
       {:ok, cart} ->
-        cart
-        |> add(item)
-        |> upsert(cart_id)
+        res =
+          cart
+          |> add(item)
+          |> upsert(cart_id)
+
+        broadcast(cart_id, {:new_item, cart_id})
+        res
 
       {:error, :not_found} ->
         with {:ok, cart} <- new(cart_id),
@@ -35,11 +50,16 @@ defmodule JustTravel.Schemas.Cart.Repository do
   def remove_item(cart_id, item_id, :decrease) do
     case find_cart(cart_id) do
       {:ok, cart} ->
-        cart
-        |> do_decrease(item_id)
-        |> upsert(cart_id)
+        res =
+          cart
+          |> do_decrease(item_id)
+          |> upsert(cart_id)
+
+        broadcast(cart_id, {:delete_success, cart_id})
+        res
 
       err ->
+        broadcast(cart_id, {:delete_error, cart_id})
         err
     end
   end
@@ -47,11 +67,16 @@ defmodule JustTravel.Schemas.Cart.Repository do
   def remove_item(cart_id, item_id, :delete) do
     case find_cart(cart_id) do
       {:ok, cart} ->
-        cart
-        |> do_delete(item_id)
-        |> upsert(cart_id)
+        res =
+          cart
+          |> do_delete(item_id)
+          |> upsert(cart_id)
+
+        broadcast(cart_id, {:delete_success, cart_id})
+        res
 
       err ->
+        broadcast(cart_id, {:delete_error, cart_id})
         err
     end
   end
