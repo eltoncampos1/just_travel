@@ -62,7 +62,8 @@ if config_env() == :prod do
       port: port,
       check_origin: [
         "https://just-travel.gigalixirapp.com/",
-        "https://just-travel.gigalixirapp.com/*"
+        "https://just-travel.gigalixirapp.com/*",
+        "//just-travel.gigalixirapp.com"
       ]
     ],
     secret_key_base: secret_key_base
