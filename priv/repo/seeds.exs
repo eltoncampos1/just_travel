@@ -43,6 +43,5 @@ for t <- tickets do
     }
     |> JustTravel.Schemas.TicketPrice.changeset()
     |> Repo.insert()
-    |> IO.inspect()
   end
 end
