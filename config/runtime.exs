@@ -48,7 +48,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  app = System.get_env("APP_NAME")
+  host = System.get_env("PHX_HOST") || "just-travel.gigalixirapp.com/"
+  port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :just_travel, JustTravelWeb.Endpoint,
     server: true,
@@ -59,9 +60,9 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: {:system, "PORT"},
-      check_origin: false
+      port: {:system, "PORT"}
     ],
+    check_origin: false,
     secret_key_base: secret_key_base
 
   # ## SSL Support
