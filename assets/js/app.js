@@ -25,7 +25,7 @@ import Hooks from "./hooks"
 import { KEY } from "./hooks/cart_session"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-const cart_id = sessionStorage.getItem(KEY)
+const cart_id = localStorage.getItem(KEY)
 
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken, cart_id: cart_id}, hooks: Hooks})
 // Show progress bar on live navigation and form submits
