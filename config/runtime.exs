@@ -62,7 +62,7 @@ if config_env() == :prod do
       port: {:system, "PORT"},
       check_origin: false,
       https: [
-        port: String.to_integer(System.get_env("PORT") || "4000")
+        port: String.to_integer(System.get_env("PORT") || "4000"),
         check_origin: false
       ]
     ],
