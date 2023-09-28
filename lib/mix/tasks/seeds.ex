@@ -4,7 +4,6 @@ defmodule Mix.Tasks.Seeds do
 
   use Mix.Task
 
-
   def run(_) do
     for _i <- 1..1000 do
       t =
