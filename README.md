@@ -1,19 +1,136 @@
 # JustTravel
 
-To start your Phoenix server:
+App feito usando Phoenix & Liveview, se trata de uma api com rotas em graphql para uso externo e 
+tambem usando comunicao websocket.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Funcionamento 
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+### Queries
+ - Get ticket by ID, Location name and Paginatio
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+```gql
+  query tickets($filters: TicketFiltersInput) {
+    tickets(filters: $filters) {
+      id
+      name
+      date
+      locationId
+      price {
+        price
+        category
+      }
+      discount {
+        discount_amount
+        discount_name
+      }
+    }
+  }
+```
 
-## Learn more
+### Mutations
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+ - Add ticket to cart
+
+```gql
+ mutation addTicketToCart($cartId: ID!, $ticketId: ID!) {
+    addTicketToCart(cartId: $cartId, ticketId: $ticketId) {
+    result {
+      id
+      totalPrice {
+        amount
+        currency
+      }
+      totalQty
+      items {
+        item {
+          category
+          country
+          date
+          description
+          discount {
+            amount
+            currency
+          }
+          id
+          location
+          price {
+            amount
+            currency
+          }
+
+        }
+      }
+    }
+      successful
+      messages {
+      code
+      field
+      message
+    }
+    }
+  }
+```
+
+- Remove ticket from cart
+
+```gql
+mutation removeFromCart($cartId: ID!, $itemId: ID!, $action: Actions) {
+        removeTicketFromCart(cartId: $cartId, itemId: $itemId, action: $action) {
+          messages {
+            code
+            field
+          }
+          successful
+          result {
+            id
+            totalQty
+            totalPrice {
+              amount
+              currency
+            }
+            items {
+              qty
+              item {
+                category
+                country
+                date
+                description
+                id
+                location
+                price {
+                  amount
+                  currency
+                }
+                discount {
+                  amount
+                  currency
+                }
+
+              }
+            }
+          }
+        }
+      }
+```
+## Índice
+
+- [Instalação](#instalação)
+
+## Instalação
+
+Necessario ter elixir e erlang instalados nas versoes semelhantes a do arquivo `.tool-versions`.
+docker e docker compose
+
+```bash
+# Exemplo de comandos de instalação
+git clone https://github.com/eltoncampos1/just-travel.git
+cd just-travel
+docker-compose up -d
+mix ecto.setup
+mix phx.server
+
+```
+
+# Como usar
+
+acesse `http://localhost:4000`, la esta disponivel a web-app
