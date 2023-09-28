@@ -32,4 +32,6 @@ defmodule JustTravelWeb.PageLive.Components.ShopCart do
   def total_per_month(cart) do
     (cart.total_price.amount / 10) |> trunc() |> Money.new()
   end
+
+  def path, do: "mock_#{:rand.uniform(4)}.png"
 end
