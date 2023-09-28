@@ -9,7 +9,7 @@ defmodule JustTravel.Utils.Repo do
 
   defp do_paginate(queryable, page, per_page) when is_binary(per_page) or is_binary(per_page) do
     page = String.to_integer(page)
-    per_page = String.to_integer(per_pagex)
+    per_page = String.to_integer(per_page)
     do_paginate(queryable, page, per_page)
   end
 
