@@ -60,11 +60,7 @@ if config_env() == :prod do
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: {:system, "PORT"},
-      check_origin: false,
-      https: [
-        port: String.to_integer(System.get_env("PORT") || "4000"),
-        check_origin: false
-      ]
+      check_origin: false
     ],
     secret_key_base: secret_key_base
 
