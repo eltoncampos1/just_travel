@@ -1,8 +1,11 @@
-defmodule Tasks.Seeds do
+defmodule Mix.Tasks.Seeds do
   alias JustTravel.Schemas
   alias JustTravel.Repo
 
-  def run do
+  use Mix.Task
+
+
+  def run(_) do
     for _i <- 1..1000 do
       t =
         Enum.random([
