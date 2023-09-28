@@ -28,4 +28,8 @@ defmodule JustTravelWeb.PageLive.Components.ShopCart do
     total_discount = Money.subtract(discount, total)
     %{percent: percent, discount: total_discount, total: total}
   end
+
+  def total_per_month(cart) do
+    (cart.total_price.amount / 10) |> trunc() |> Money.new()
+  end
 end

@@ -79,7 +79,7 @@
 
         <li class="flex items-center justify-between text-base font-normal font-inter text-gray-dark">
           <span>
-            10X Sem juros de <%= @cart.total_price %>
+            10X Sem juros de <%= total_per_month(@cart) %>
           </span>
           <span><%= @cart.total_price %></span>
         </li>
