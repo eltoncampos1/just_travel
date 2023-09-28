@@ -3,6 +3,5 @@ defmodule JustTravelWeb.PageLive.Components.TicketCard do
 
   alias JustTravelWeb.PageLive.Components
 
-
   def path, do: "mock_#{:rand.uniform(4)}.png"
 end
