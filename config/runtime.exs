@@ -53,7 +53,7 @@ if config_env() == :prod do
 
   config :just_travel, JustTravelWeb.Endpoint,
     server: true,
-    url: [host: app <> ".gigalixirapp.com", port: 443],
+    url: [host: host, port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
